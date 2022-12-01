@@ -1,1 +1,1 @@
-/Applications/MAMP/htdocs/aloeveraforever/content/plugins/query-monitor/wp-content/db.php
+/Applications/MAMP/htdocs/aloe-english/content/plugins/query-monitor/wp-content/db.php
