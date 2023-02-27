@@ -4,14 +4,16 @@ define( 'ALLOYOGI_THEME_VERSION', '1.0' );
 // Main Menu URL and Slug
 define('BLOG_SLUG','blog' );
 define('BLOG_URL', get_home_url().'/'.BLOG_SLUG.'/');
-define('ALOE_VERA_SLUG','aloe-vera' );
-define('ALOE_VERA_URL', get_home_url().'/'.ALOE_VERA_SLUG.'/');
+define('ALOE_VERA_SLUG','guide/aloe-vera' );
+define('ALOE_VERA_URL', get_home_url().'/'.ALOE_VERA_SLUG);
 define('JOIN_US_SLUG','rejoignez-nous' );
 define('JOIN_US_URL', get_home_url().'/'.JOIN_US_SLUG.'/');
 define('ORDER_SLUG','commander' );
 define('ORDER_URL', get_home_url().'/'.ORDER_SLUG.'/');
 define('ALL_PRODUCTS_SLUG','produits-forever' );
 define('ALL_PRODUCTS_URL', get_home_url().'/'.ALL_PRODUCTS_SLUG.'/');
+define('FOREVER_LIVING_SLUG','forever-living-products-france' );
+define('FOREVER_LIVING_URL', get_home_url().'/'.FOREVER_LIVING_SLUG.'/');
 // Theme support
 function alloyogi_setup() {
     //Gestion des titres par Wordpress
@@ -219,6 +221,7 @@ function better_comments($comment, $args, $depth) {
 <?php
         }
 endif;
+
 // Acf return numeric fild as number and not a string
 add_filter('acf/format_value/type=number', 'acf_number_str_to_number', 20, 3);
 function acf_number_str_to_number($value, $post_id, $field) {
@@ -412,6 +415,51 @@ function register_my_menus() {
  add_action( 'init', 'register_my_menus' );
 
 
+ 
+function get_child_pages_by_parent_title($pageId,$limit = -1)
+{
+    // needed to use $post
+    global $post;
+    // used to store the result
+    $pages = array();
+
+    // What to select
+    $args = array(
+        'post_type' => 'cocon',
+        'post_parent' => $pageId,
+        'posts_per_page' => $limit
+    );
+    $the_query = new WP_Query( $args );
+
+    while ( $the_query->have_posts() ) {
+        $the_query->the_post();
+        $pages[] = $post->ID;
+    }
+    wp_reset_postdata();
+    return $pages;
+}
+
+
+
+//  function delete_post_type(){
+//   unregister_post_type( Post_Type_Distributor::NAME );
+//   unregister_taxonomy(Post_Type_Distributor::TAXONOMY_NAME_LOCATION);
+// }
+// add_action('init','delete_post_type');
+
+// function robots_meta_aloevera(){
+
+//   if(is_tax(Post_Type_Distributor::TAXONOMY_NAME_LOCATION)){
+//     $location = get_queried_object();
+//     $location_type = get_field('location_type_field', 'location_' . $location->term_id);
+//     if ($location_type === 'Ville'){
+//       if(!get_field('big_city')){
+//         echo '<meta name="robots" content="noindex, follow, nocache">';
+//     }
+//   }
+//   }
+// }
+// add_action( 'wp_head', 'robots_meta_aloevera' );
  
 //require_once(dirname(__FILE__) . '/includes/smtp.php'); 
 // Inclusion des fichiers de configuration

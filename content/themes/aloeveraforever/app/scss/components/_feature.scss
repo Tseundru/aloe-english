@@ -11,5 +11,11 @@
     content: "#";
     padding-right: $gutter-small;
   }
+  & a{
+    color: $color-text-secondary;
+    &:hover{
+      color: $color-secondary;
+    }
+  }
 
 }

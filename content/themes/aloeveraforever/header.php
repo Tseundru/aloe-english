@@ -4,8 +4,10 @@
 
 use RankMath\Sitemap\Providers\Post_Type;
 
+
+
 $page_custom_classes ="" ;
-if (is_singular('post')){
+if (is_singular('post') || is_singular('cocon') ){
   $page_custom_classes ="blog-post-article" ;
 
 };
@@ -32,6 +34,7 @@ $taxonomy =  Post_Type_Product::TAXONOMY_NAME_CATEGORY;
 $tax_terms = get_terms($taxonomy, [
   'hide_empty' => false,
   'include' => [],
+  'exclude' => [42]
 ]);
 $terms_sort_by_order = [];
 $x = 0; 
@@ -64,6 +67,17 @@ $blog_categories = get_categories($args);
 <head>
   <meta charset="<?php bloginfo( 'charset' ); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <?php  if(is_tax(Post_Type_Distributor::TAXONOMY_NAME_LOCATION)){
+    $location = get_queried_object();
+    $location_type = get_field('location_type_field', 'location_' . $location->term_id);
+    $departement = get_field('departement', 'location_' . $location->term_id);
+    $departementID = get_term_by('name', $departement, 'location')->term_id;
+    if ($location_type === 'Ville'){
+      if(!get_field('big_city')){
+        echo '<meta name="robots" content="noindex, follow, nocache">';
+    }
+  }
+  }?>
 </div>
   <?php wp_head(); ?>
   <?php if(is_home()):?>
@@ -76,7 +90,7 @@ $blog_categories = get_categories($args);
   {"@context": "https://schema.org","@type":"WebSite","url":"<?= get_home_url();?>","potentialAction": { "@type": "SearchAction","target": "<?= get_home_url();?>?s={search_term_string}","query-input": "required name=search_term_string"}}
   </script>
 <!-- Shema site link -->
-<?= $canonical_link ? '<link rel="canonical" href="'.$canonical_link.'" />' : '' ?>
+<?php //$canonical_link ? '<link rel="canonical" href="'.$canonical_link.'" />' : '' ;?>
 
 </head>
 <body <?php body_class( $page_custom_classes ); ?>>
@@ -86,7 +100,7 @@ $blog_categories = get_categories($args);
     src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v11.0&appId=1994970534156032&autoLogAppEvents=1"
     nonce="PzJvz49M"></script>
 
-  <div class="container <?= is_singular('post') || is_category() || is_page('blog') ? 'container--blog' : '' ?> ">
+  <div class="container <?= is_singular('post') || is_category() || is_page('blog') || is_singular('cocon') ? 'container--blog' : '' ?> ">
     <!--<div class="alert shipping">
       Délai de livraison dans les 1-3 jours ouvrables
     </div>-->
@@ -127,6 +141,13 @@ $blog_categories = get_categories($args);
           </div>
           <li class="mobilemenu__list__item"><a href="<?= ALL_PRODUCTS_URL; ?>" class="mobilemenu__list__item__link" title="Produits aloe vera Forever" >Produits</a>
             <ul class="mobilemenu__list__item__sublist">
+            <li class="mobilemenu__list__item__sublist__subitem">
+              <a href="<?= get_term_link('gel-aloe-vera', 'product_badge'); ?>"
+                  class="mobilemenu__list__item__sublist__subitem__link"
+                   title="Gel d'aloe vera - Tous les produits">
+                   Gel d'aloe vera
+              </a>
+            </li>
               <?php foreach($terms_sort_by_order as $term):?>
               <li class="mobilemenu__list__item__sublist__subitem"><a href="<?= $term->link ?>"
                   class="mobilemenu__list__item__sublist__subitem__link" title="<?= $term->name ?>"><?= $term->name ?></a></li>
@@ -134,16 +155,12 @@ $blog_categories = get_categories($args);
             </ul>
           </li>
           <li class="mobilemenu__list__item"> <a href="<?= ALOE_VERA_URL; ?>" class="mobilemenu__list__item__link" title="Aloe vera" >Aloe vera</a> </li>
-          
+          <li class="mobilemenu__list__item"> <a href="<?= FOREVER_LIVING_URL; ?>" class="mobilemenu__list__item__link" title="Forever Living Products" >Forever Living</a> </li>
+
           <li class="mobilemenu__list__item"><a href="<?= JOIN_US_URL; ?>" class="mobilemenu__list__item__link" title="Devenez distributeur Forever" >Rejoignez-nous !</a></li>
           <li class="mobilemenu__list__item"><a href="<?= ORDER_URL; ?>" class="mobilemenu__list__item__link" title="Commander les produits Forever Living"  >Commander</a></li>
           <li class="mobilemenu__list__item"><a href="<?= BLOG_URL; ?>" class="mobilemenu__list__item__link" title="Blog aloe vera Forever" >Blog</a>
-            <ul class="mobilemenu__list__item__sublist">
-              <?php foreach($blog_categories as $category):?>
-              <li class="mobilemenu__list__item__sublist__subitem"><a href="<?= get_category_link($category->term_id) ?>"
-                  class="mobilemenu__list__item__sublist__subitem__link" title="<?= $category->name ?>"><?= $category->name ?></a></li>
-              <?php endforeach; ?>
-            </ul>
+            
           </li>
         </ul>
         <div class="mobilemenu__emptyspace js-emptySpace"></div>
@@ -155,6 +172,11 @@ $blog_categories = get_categories($args);
         <ul class="mainmenu__list">
           <li class="mainmenu__list__item"><a href="<?= ALL_PRODUCTS_URL; ?>" class="mainmenu__list__item__link" title="Produits aloe vera Forever" >Produits</a>
             <ul class="mainmenu__list__item__sublist">
+            <li class="mainmenu__list__item__sublist__subitem">
+                <a href="<?= get_term_link('gel-aloe-vera', 'product_badge'); ?>" class="mainmenu__list__item__sublist__subitem__link" title="Gel d'aloe vera - Tous les produits">
+                Gel d'aloe vera
+                </a>
+              </li>
             <?php foreach($terms_sort_by_order as $term):?>
               <li class="mainmenu__list__item__sublist__subitem">
                 <a href="<?= $term->link ?>" class="mainmenu__list__item__sublist__subitem__link" title="<?= $term->name ?>">
@@ -165,6 +187,8 @@ $blog_categories = get_categories($args);
             </ul>
           </li>
           <li class="mainmenu__list__item"> <a href="<?= ALOE_VERA_URL; ?>" class="mainmenu__list__item__link" title="Aloe vera" >Aloe vera</a> </li>
+          <li class="mainmenu__list__item"> <a href="<?= FOREVER_LIVING_URL; ?>" class="mainmenu__list__item__link" title="Forever Living Products" >Forever Living</a> </li>
+
           <li class="mainmenu__list__item"><a href="<?= JOIN_US_URL; ?>" class="mainmenu__list__item__link" title="Devenez distributeur Forever" >Rejoignez-nous !</a></li>
           <li class="mainmenu__list__item"><a href="<?= ORDER_URL; ?>" class="mainmenu__list__item__link" title="Commander les produits Forever Living">Commander</a></li>
         </ul>

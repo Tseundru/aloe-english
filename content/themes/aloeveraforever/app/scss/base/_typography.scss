@@ -32,6 +32,19 @@ body {
     &--4{
         
     }
+    &--blog{
+        font-size: $font-size-very-very-tall;
+        line-height: $font-size-very-very-tall*1.5;
+        font-family: $font-stack-blog;
+        color: $color-primary;
+        font-weight: 700;
+        margin: $gutter-large 0;
+        padding-top : $gutter-large;
+        padding-bottom : $gutter-large;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        text-align: center;
+    }
 
 }
 

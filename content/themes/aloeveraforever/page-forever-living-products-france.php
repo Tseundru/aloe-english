@@ -33,13 +33,13 @@ $tax_terms = get_terms($taxonomy, [
   
   <section class="products topSeller">
   <header class="products__header">
-    <h2 class="products__header__title title title--2">Produits Forever Les plus vendus en France</h2>
+    <h2 class="products__header__title title title--2">Produits Aloe Vera Forever Linving Products France</h2>
     
-    <p class="products__header__subtitle">Vos produits Forever Living préférés, découvrez les produits les plus vendus dans l'hexagone.
-      <a href=<?= get_term_link('top-vente', 'product_badge'); ?> class="products__header__subtitle__link" title="Meilleures ventes des produits Forever">Voir Tous</a>
+    <p class="products__header__subtitle">Vos produits Aloe Vera Forever Living préférés, découvrez les produits les plus vendus dans l'hexagone.
+      <a href=<?= get_term_link('gel-aloe-vera', 'product_badge'); ?> class="products__header__subtitle__link" title="Meilleures ventes des produits Forever">Voir Tous</a>
     </p>
   </header>
-  <?php get_template_part('template-parts/product/products-carousel', null, ['filter' => 'favorite','methode'=>'filter']);?>
+  <?php get_template_part('template-parts/product/products-carousel', null, ['filter' => 'gel-aloe-vera','methode'=>'filter']);?>
 </section>
 
 
@@ -96,48 +96,14 @@ $tax_terms = get_terms($taxonomy, [
       </p>
   </main>
         
-        
     </section>
 
-
-    <!-- New products -->
-<section class="products newProducts">
-      <header class="products__header">
-        <h2 class="products__header__title title title--2">Nouveaux produits Forever Living en France</h2>
-        <p class="products__header__subtitle">
-          Vos nouveaux produits préférés de la marque Forever Living fraichement arrivés sur le marché français 
-          <a href=<?= get_term_link('nouveaute', 'product_badge'); ?>
-            class="products__header__subtitle__link" title="Nouveaux produits Forever">Voir Tous
-          </a>
-        </p>
-      </header>
-     <?php get_template_part('template-parts/product/products-carousel', null, ['filter' => 'nouveaute','methode'=>'filter']);?>
-    </section>
-    <!-- Last Posts -->
-<section class="lastPosts">
-      <header class="lastPosts__header">
-        <h2 class="lastPosts__header__title title title--2">
-          Derniers articles du blog Forever France
-</h2>
-      </header>
-      <main class="lastPosts__main swiper-container">
-      <?php 
-      $recent_posts_args = [
-        'numberposts' => 5,
-        'post_status' => 'publish'
-      ];
-      $recent_posts = wp_get_recent_posts($recent_posts_args , 'object'); 
-      
-      ?>
-        <div class="lastPosts__main__list swiper-wrapper">
-          <?php foreach($recent_posts as $post): ?>
-           <?php  get_template_part('template-parts/posts/latestPost/latestPost', null, $post); ?>
-          <?php endforeach; ?>
-        </div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-      </main>
-
-    </section>
+    <?php
+$page = get_page_by_path( 'forever-living-products' );
+$content =  get_post($page)->post_content;
+$content = apply_filters('the_content', $content);
+$content = str_replace(']]>', ']]>', $content);
+echo $content;
+?>
 </main>
 <?php get_footer(); ?>

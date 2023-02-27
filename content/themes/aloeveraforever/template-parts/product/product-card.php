@@ -75,7 +75,7 @@ if ($comments) {
     </div>
   </header>
   <main class="product__main">
-    <h3 class="product__main__title"><a href="<?php the_permalink() ?>" title="<?php the_title() ?>"> <?php the_title() ?></a></h3>
+    <p class="product__main__title"><a href="<?php the_permalink() ?>" title="<?php the_title() ?>"> <?php the_title() ?></a></p>
     <p class="product__main__subtitle"><a href="<?php the_permalink() ?>" title="<?php the_title() ?>">Ref. <?= get_field('product_ref') ?> | <?= get_field('product_price') ?> €</a></p>
   </main>
 </article>

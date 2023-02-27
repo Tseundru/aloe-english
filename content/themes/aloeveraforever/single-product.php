@@ -250,6 +250,7 @@ if($is_productStop){
         </a>
         <?php  endif ; ?>
       </p>
+      <p>Prix France Métropole</p>
       <p class="singleProduct__header__data__ref">
         <?php if(!$is_productStop ): ?>
         Réf: <?= get_field('product_ref'); ?>
@@ -288,11 +289,11 @@ if($is_productStop){
 
     <div class="singleProduct__header__action">
     <?php if(!$is_productStop) : ?>
-      <a href="<?= $orderUrl ?>" class="singleProduct__header__action__order button button--order" title="Commander <?php the_title(); ?> sur la boutique en ligne" rel="no-follow" target="_blank">
+      <a href="<?= $orderUrl ?>" class="singleProduct__header__action__order button button--order" title="Commander <?php the_title(); ?> sur la boutique en ligne" rel="nofollow" target="_blank">
         Acheter ce produit
       </a>
       <?php endif ; ?>
-      <a href="<?= $joinUrl ?>" class="singleProduct__header__action__sell button  button button--sell" title="Devenir distributeur Forever Living" rel="no-follow" target="_blank">
+      <a href="<?= $joinUrl ?>" class="singleProduct__header__action__sell button  button button--sell" title="Devenir distributeur Forever Living" rel="nofollow" target="_blank">
         Vendre
       </a>
       <div class="singleProduct__header__action__share button button--social  ">
@@ -349,10 +350,10 @@ if($is_productStop){
     <ul class="singleProduct__feature__list">
       <?php
       if(get_field('product_aloe_percentage')):?>
-        <li class="feature">
+       <li class="feature">
           Contient plus de 
-          <?= get_field('product_aloe_percentage')?>% de gel pur d'aloe vera
-        </li>
+          <?= get_field('product_aloe_percentage')?>% de pur <a href="<?= get_term_link('gel-aloe-vera', 'product_badge'); ?>">gel d'aloe vera 
+        </li></a> 
       <?php endif ;
       $strengths_list = $is_variant ? get_field('product_strengths_list', $original_product_ID) : get_field('product_strengths_list');
       if ($strengths_list):
@@ -466,7 +467,7 @@ $product_benefits = $is_variant ? get_field('product_benefits', $original_produc
     <section class="accordion singleProduct__benefit">
       <header class="accordion__header js-accordion">
         <h2 class="accordion__header__title title title--2">
-          Bienfaits de <?php the_title(); ?>
+          Bienfaits 
         </h2>
         <i class="fa fa-plus accordion__header__icon" aria-hidden="true"></i>
       </header>
@@ -479,7 +480,7 @@ $product_benefits = $is_variant ? get_field('product_benefits', $original_produc
   <section class="accordion singleProduct__use">
     <header class="accordion__header js-accordion">
       <h2 class="accordion__header__title title title--2">
-        Conseil d'utilisation pour <?php the_title(); ?>
+        Conseils d'utilisations 
       </h2>
       <i class="fa fa-plus accordion__header__icon" aria-hidden="true"></i>
     </header>
@@ -493,7 +494,7 @@ $product_benefits = $is_variant ? get_field('product_benefits', $original_produc
     <section class="accordion singleProduct__faq">
       <header class="accordion__header js-accordion">
         <h2 class="accordion__header__title title title--2">
-          Questions fréquemment posée sur <?php the_title(); ?>
+          F.A.Q 
         </h2>
         <i class="fa fa-plus accordion__header__icon" aria-hidden="true"></i>
       </header>
@@ -537,7 +538,8 @@ $product_benefits = $is_variant ? get_field('product_benefits', $original_produc
       </div>
     <?php else : ?>
       <?php $no_vide_image = get_field('product_image_no_video')['url']; ?>
-      <img src="<?= $no_vide_image ?>" alt="">
+      <?php $altvideo = isset(get_post_meta(get_field('product_image_no_video')['ID'], '_wp_attachment_image_alt')[0]) ? get_post_meta(get_field('product_image_no_video')['ID'], '_wp_attachment_image_alt')[0] : $title; ?>
+      <img src="<?= $no_vide_image ?>" alt= "<?= $altvideo ?>">
     <?php endif; ?>
   </div>
   <div class="singleProduct__image" style="background-image: url(<?=  get_field('product_image_description')['url']; ?>); background-repeat:no-repeat">
@@ -590,7 +592,7 @@ $product_benefits = $is_variant ? get_field('product_benefits', $original_produc
 <section class=" evaluations">
       <header class=" evaluations__header">
         <h2 class=" evaluations__header__title title title--2" id="evaluations">
-          Ce que nos clients disent sur <?php the_title(); ?>
+          Avis clients
         </h2>
         <button class="button evaluations__header__button"> Laisser un avis </button>
 <?php comments_template(); // Par ici les commentaires 

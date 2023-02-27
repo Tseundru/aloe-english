@@ -7,12 +7,14 @@
       if($args['methode']==='filter'){
         $queryArgs = [
           'post_type'  => 'product',
-          'posts_per_page' => 20,
+          'posts_per_page' => 10,
           'tax_query' => [
             [
               'taxonomy' => 'product_badge',
               'field'    => 'slug',
               'terms'    => array( $args['filter'] ),
+              
+        
             ]
           ]
         ];
@@ -20,7 +22,7 @@
         $queryArgs= [
           'post__in' => $args['ids'],
           'post_type'  => 'product',
-          'posts_per_page' => 15,
+          'posts_per_page' => 10,
         ];
       }
 
@@ -30,8 +32,11 @@
       
       if ($query->have_posts()) :
         while ($query->have_posts()) : $query->the_post();
+        
         if(!get_field('product_stop_field')){
+          
           get_template_part('template-parts/product/product-card');
+          
          }
         endwhile;
       endif;

@@ -1,17 +1,6 @@
 <?php
 
-
-
-
 get_header();
-
-$the_post_categories = wp_get_post_categories(get_the_ID());
-
-$args = [
-  'hide_empty'      => false,
-  'exclude' => [1,46305],
-];
-$blog_categories = get_categories($args);
 
 ?>
 
@@ -33,7 +22,7 @@ $blog_categories = get_categories($args);
       </div>
 
 
-      <main class="blogSingle">
+<main class="blogSingle">
         <article class="blogPost">
           <header class="blogPost__header ">
           <?php get_template_part('template-parts/posts/blogPostMeta/blogPostMeta'); ?>
@@ -49,9 +38,6 @@ $blog_categories = get_categories($args);
             <div class="blogPost__header__meta">
               <div class="blogPost__header__meta__category">
                 
-                <?php foreach($the_post_categories as $category) : ?>
-                <a class="blogPost__header__meta__category__item" href="<?= get_category_link($category) ?>" title="<?= get_cat_name($category); ?>"><span><?= get_cat_name($category); ?></span></a>
-                <?php endforeach ?>
               </div>
               
             </div>
@@ -122,11 +108,48 @@ $blog_categories = get_categories($args);
               </div>
             </div>
             <?php endif; ?>
-            <div class="blogPost__main__content <?= (!is_user_logged_in() && get_field('blogPost_private_content_field')) ? 'blogPost__main__content--blur': '' ?>"><?php the_content(); ?></div>
-
+            <div class="blogPost__main__content <?= (!is_user_logged_in() && get_field('blogPost_private_content_field')) ? 'blogPost__main__content--blur': '' ?>"><?php the_content(); ?>
+            <?php 
+              $pageId = get_the_ID();
+              $parentPageID = wp_get_post_parent_id($pageId);
+              $connectedPages = get_child_pages_by_parent_title($parentPageID);           
+              ?>
+              <?php if(count($connectedPages)>1): ?>
+              <p class='title--blog'>Continuez votre lecture</p>
+              <ul class="blogPost__main__content">
+              <?php foreach ($connectedPages as $page) : ?>
+                <?php if($page != $pageId): ?>
+                  <li><a href="<?= get_permalink($page) ?>" title="<?= get_the_title($page) ?>"><?= get_the_title($page) ?></a></li>
+                <?php endif; endforeach; ?>
+              </ul>
+              <?php endif; ?>
+          </div>
+                          
           </main>
         </article>
-        <?php get_template_part('template-parts/posts/blogSidebar/blogSidebar'); ?>
+        <?php 
+
+?>
+<aside class="blogSidebar">
+          <header class="blogSidebar__header">
+            <div class="blogSidebar__header__sharing ">
+              <a class="blogSidebar__header__sharing__link" title="Partager sur Facebook" href="javascript:PopupWindow(this,'https://www.facebook.com/sharer.php?u=<?php the_permalink(); ?>');"> <i class="fa fa-facebook" aria-hidden="true"></i></a>
+              <a class="blogSidebar__header__sharing__link" title="Partager sur Twitter" href="javascript:PopupWindow(this,' https://twitter.com/intent/tweet?url=<?php the_permalink(); ?>&text=<?php the_title(); ?>');"> <i class="fa fa-twitter" aria-hidden="true"></i></a>
+              <a class="blogSidebar__header__sharing__link" title="Partager sur Pinterest" href="javascript:PopupWindow(this,' https://pinterest.com/pin/create/button/?url=<?php the_permalink(); ?>&media=<?php the_post_thumbnail_url(); ?>&description=<?php the_title(); ?>');"> <i class="fa fa-pinterest" aria-hidden="true"></i></a>
+              <a class="blogSidebar__header__sharing__link" title="Partager sur Linkedin" href="javascript:PopupWindow(this,' https://www.linkedin.com/shareArticle?mini=true&url=<?php the_permalink(); ?>');"> <i class="fa fa-linkedin" aria-hidden="true"></i></a>
+              <a class="blogSidebar__header__sharing__link" title="Partager par mail" href="mailto:?&subject=%0A<?php the_title(); ?>&cc=&bcc=&body=<?php the_permalink(); ?>%0A<?php the_title(); ?>" target="_blank"> <i class="fa fa-envelope" aria-hidden="true"></i></a>
+            </div>
+          </header>
+          
+          <main class="blogSidebar__main">
+            <div class="blogSidebar__main__block">
+              <div class="blogSidebar__main__block__list">
+              © Aloe vera Forever 
+              </div>
+            </div>
+          </main>
+          
+        </aside>
       </main>
     <?php endwhile; 
     wp_reset_postdata();?>

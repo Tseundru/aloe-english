@@ -109,7 +109,7 @@ if( !empty($block['align']) ) {
 <?php if(!get_field('product_stop_field', $product_ID)) : ?>
           
 <?php $orderUrl =get_field('option_page_shopURL_field', 'option').get_field('FBONum_field', 'option').'/'.get_field('product_ref',$product_ID); ?>
-<a href="<?= $orderUrl ?>" class="singleProduct__header__action__order button button--order" title="Commander <?php the_title(); ?> sur la boutique en ligne" rel="no-follow" target="_blank">
+<a href="<?= $orderUrl ?>" class="singleProduct__header__action__order button button--order" title="Commander <?php the_title(); ?> sur la boutique en ligne" rel="nofollow" target="_blank">
 Commander
       </a>
       <?php endif ; ?>

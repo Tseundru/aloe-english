@@ -17,11 +17,11 @@ $labels = get_terms([
 ]);
 
 //Filter and sort options
-$filter_orderby = '';
-$filter_order = 'ASC';
-$filter_order_type = 'name';
+$filter_orderby = 'product_aloe_percentage';
+$filter_order = 'DESC';
+$filter_order_type = 'meta_value_num';
 $filter_option = array();
-$sort_option = 'none';
+$sort_option = '';
 
 
 if (isset($_POST) && $_POST != null) {
@@ -143,6 +143,7 @@ if(is_tax($taxonomy_badge)){
 $tax_terms = get_terms($taxonomy_category, [
   'hide_empty' => false,
   'include' => [],
+  'exclude' => [42]
 ]);
 $terms_sort_by_order = [];
 $x = 0;
@@ -267,6 +268,9 @@ ksort($terms_sort_by_order, SORT_NUMERIC);
         <ul class="productCategory__products__category__main__list">
           <li class="productCategory__products__category__main__list__item <?= is_page(ALL_PRODUCTS_SLUG) ? 'productCategory__products__category__main__list__item--active' : '' ?>">
             <a href="<?= ALL_PRODUCTS_URL; ?>" title="Produits Forever"> Tous les produits</a>
+          </li>
+          <li class="productCategory__products__category__main__list__item <?= is_page(ALL_PRODUCTS_SLUG) ? 'productCategory__products__category__main__list__item--active' : '' ?>">
+            <a href="<?= get_term_link('gel-aloe-vera', 'product_badge'); ?>" title="Gel d'aloe vera - Tous les produits">Gel d'aloe vera</a>
           </li>
           <?php foreach ($terms_sort_by_order as $term) : ?>
             <li class="productCategory__products__category__main__list__item <?= $term->term_id == $term_id ?  'productCategory__products__category__main__list__item--active' : '' ?>">

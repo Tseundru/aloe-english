@@ -19,6 +19,7 @@ define (
 //Post Types
 require PLUGIN_DIR_PATH_ALOE_SETTINGS . 'includes/class-post-type-product.php';
 require PLUGIN_DIR_PATH_ALOE_SETTINGS . 'includes/class-post-type-distributor.php';
+require PLUGIN_DIR_PATH_ALOE_SETTINGS . 'includes/class-post-type-cocon.php';
 
 //Custom fields
 require PLUGIN_DIR_PATH_ALOE_SETTINGS . 'includes/custom-fields-product.php';
@@ -46,16 +47,20 @@ require PLUGIN_DIR_PATH_ALOE_SETTINGS . 'includes/blocks/construct/custom-fields
 
 $post_type_product = new Post_Type_Product;
 $post_type_distributor = new Post_Type_Distributor;
+$post_type_cocon = new Post_Type_Cocon;
 
 $aloe_settings_activation = function() use (
   $post_type_product,
-  $post_type_distributor)  {
+  $post_type_distributor, $post_type_cocon)  {
   
     $post_type_product->register_taxonomies();
     $post_type_product->register_post_type();
 
     $post_type_distributor->register_taxonomies();
     $post_type_distributor->register_post_type();
+
+    $post_type_cocon->register_post_type();
+    
 
   flush_rewrite_rules();
 };
@@ -66,6 +71,7 @@ function aloe_settings_deactivation()   {
     
   unregister_post_type( Post_Type_Product::NAME );
   unregister_post_type( Post_Type_Distributor::NAME );
+  unregister_post_type( Post_Type_Cocon::NAME );
   
   // remove_role(Role_Member::NAME);
   // update_option(Role_Member::OPTION_NAME, 0);

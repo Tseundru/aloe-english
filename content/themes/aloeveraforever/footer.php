@@ -4,11 +4,11 @@
       Aloe Vera Forever
     </h2>
     <ul class="footer__header__social">
-      <li class="footer__header__social__item"><a class="footer__header__social__item__link" href="<?= get_field('option_page_facebookURL_field', 'option'); ?> " title="Page Facebook" rel="no-follow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+      <li class="footer__header__social__item"><a class="footer__header__social__item__link" href="<?= get_field('option_page_facebookURL_field', 'option'); ?> " title="Page Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
       </li>
-      <li class="footer__header__social__item"><a class="footer__header__social__item__link" href="<?= get_field('option_page_instagramURL_field', 'option'); ?>" title="Compte Instagram" rel="no-follow" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+      <li class="footer__header__social__item"><a class="footer__header__social__item__link" href="<?= get_field('option_page_instagramURL_field', 'option'); ?>" title="Compte Instagram" rel="nofollow" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
       </li>
-      <li class="footer__header__social__item"><a class="footer__header__social__item__link" href="<?= get_field('option_page_youtubeURL_field', 'option'); ?>" title="Chaine Youtube" rel="no-follow" target="_blank"> <i class="fa fa-youtube-square" aria-hidden="true"></i></a>
+      <li class="footer__header__social__item"><a class="footer__header__social__item__link" href="<?= get_field('option_page_youtubeURL_field', 'option'); ?>" title="Chaine Youtube" rel="nofollow" target="_blank"> <i class="fa fa-youtube-square" aria-hidden="true"></i></a>
       </li>
     </ul>
   </header>
@@ -62,8 +62,8 @@
         <?= bloginfo('name'); ?>
       </p>
       <div class="footer__main__info__text footer__main__widget__text">
-        <p class="footer__main__info__text__phone"> <a href="tel:+33<?= substr(str_replace(' ', '', get_field('telNum_field', 'option')), 1); ?>" rel="no-follow" target="_blank"><?php the_field('telNum_field', 'option'); ?></a> </p>
-        <p class="footer__main__info__text__mail"><a href="mailto:<?= get_field('option_page_Mail_field', 'option'); ?>" rel="no-follow" target="_blank"><?= str_replace('@', '{@}', get_field('option_page_Mail_field', 'option')); ?></a></p>
+        <p class="footer__main__info__text__phone"> <a href="tel:+33<?= substr(str_replace(' ', '', get_field('telNum_field', 'option')), 1); ?>" rel="nofollow" target="_blank"><?php the_field('telNum_field', 'option'); ?></a> </p>
+        <p class="footer__main__info__text__mail"><a href="mailto:<?= get_field('option_page_Mail_field', 'option'); ?>" rel="nofollow" target="_blank"><?= str_replace('@', '{@}', get_field('option_page_Mail_field', 'option')); ?></a></p>
 
         <p class="footer__main__info__text__title">Entrepreneur indépendant <br /> Partenaire de la société <br />
           Forever Living Products</p>
@@ -98,7 +98,7 @@
         <p>Pour votre santé, pratiquez une activité physique régulière.</p>
         <p>Les compléments alimentaires doivent être utilisé dans le cadre d'un mode de vie sain et ne pas se
           substituer à une alimentation variée et équilibrée.</p>
-        <p>Plus d'info sur <a href="https://mangerbouger.fr" rel="no-follow" title="manger bouger site web" target="_blank">mangerbouger.fr</a> </p>
+        <p>Plus d'info sur <a href="https://mangerbouger.fr" rel="nofollow" title="manger bouger site web" target="_blank">mangerbouger.fr</a> </p>
       </div>
     </div>
   </main>
